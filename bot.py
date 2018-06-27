@@ -2,6 +2,7 @@
 from telebot import TeleBot
 import requests
 import os
+
 # import some_api_lib
 # import ...
 
@@ -21,6 +22,12 @@ token = os.environ['TELEGRAM_TOKEN']
 app = TeleBot(__name__)
 
 
+def mid(s, l, r):
+    l1 = s.find(l) + len(l)
+    r1 = s[l1:].find(r) + l1
+    return s[l1:r1]
+
+
 @app.route('/command ?(.*)')
 def example_command(message, cmd):
     chat_dest = message['chat']['id']
@@ -28,13 +35,23 @@ def example_command(message, cmd):
     app.send_message(chat_dest, msg)
 
 
-
 @app.route('(?!/).+')
 def parrot(message):
     chat_dest = message['chat']['id']
     user_msg = message['text']
     msg = user_msg
-    app.send_message(chat_dest, msg)
+    # --
+    r = requests.get("http://f.cili001.com/index/index?c=&k=" + msg)
+    first = r.text.split("<ul class=\"link-list\">")[1]
+    # print(first)
+    mag = mid(first, 'data-magnet="', '"')
+    name = mid(first, '<span class="name">', '</span>')
+    size = mid(first, '<span class="size">', '</span>')
+    time = mid(first, '<span class="time">', '</span>')
+    date = mid(first, '<p class="link-list-title">', '</p>').strip()
+    msg2 = "%s %s\n大小: %s\n%s" % (date, time, size, mag)
+    # --
+    app.send_message(chat_dest, msg2)
 
 
 if __name__ == '__main__':
