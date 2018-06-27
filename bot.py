@@ -36,7 +36,7 @@ def example_command(message, cmd):
 
     # --
     try:
-        cnt=msg.split()[0]
+        cnt=int(msg.split()[0])
         key=' '.join(msg.split()[1:])
         r = requests.get("http://f.cili001.com/index/index?c=&k=" + key)
         for i in range(1, cnt):
