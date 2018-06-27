@@ -33,7 +33,7 @@ def example_command(message, cmd):
     chat_dest = message['chat']['id']
     user_msg = message['text']
     msg = user_msg
-
+    app.send_message(chat_dest,msg)
     # --
     try:
         cnt=int(msg.split()[0])
