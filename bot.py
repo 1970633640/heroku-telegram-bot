@@ -28,6 +28,7 @@ def example_command(message, cmd):
     app.send_message(chat_dest, msg)
 
 
+
 @app.route('(?!/).+')
 def parrot(message):
     chat_dest = message['chat']['id']
@@ -38,4 +39,4 @@ def parrot(message):
 
 if __name__ == '__main__':
     app.config['api_key'] = token
-    app.poll(debug=False)
+    app.poll(debug=True)
