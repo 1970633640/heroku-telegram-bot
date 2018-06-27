@@ -35,9 +35,8 @@ def example_command(message, cmd):
     msg = user_msg
     # --
     try:
-        cnt=int(msg.split()[1])
+        cnt=int(msg.split()[1])+1
         key=' '.join(msg.split()[2:])
-        app.send_message(chat_dest, "%s %s"%(cnt,key))
         r = requests.get("http://f.cili001.com/index/index?c=&k=" + key)
         for i in range(1, cnt):
             first = r.text.split("<ul class=\"link-list\">")[i]
