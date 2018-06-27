@@ -28,11 +28,32 @@ def mid(s, l, r):
     return s[l1:r1]
 
 
-@app.route('/command ?(.*)')
+@app.route('/advanced ?(.*)')
 def example_command(message, cmd):
     chat_dest = message['chat']['id']
-    msg = "命令1: {}".format(cmd)
-    app.send_message(chat_dest, msg)
+    user_msg = message['text']
+    msg = user_msg
+
+    # --
+    try:
+        cnt=msg.split()[0]
+        key=' '.join(msg.split()[1:])
+        r = requests.get("http://f.cili001.com/index/index?c=&k=" + key)
+        for i in range(1, cnt):
+            first = r.text.split("<ul class=\"link-list\">")[i]
+            # print(first)
+            mag = mid(first, 'data-magnet="', '"')
+            name = mid(first, '<span class="name">', '</span>').replace('[CiLi001.com]','')
+            size = mid(first, '<span class="size">', '</span>')
+            time = mid(first, '<span class="time">', '</span>')
+            date = mid(first, '<p class="link-list-title">', '</p>').strip()
+            msg2 = "结果%s:\n%s\n%s %s\n大小: %s\n磁力链接:" % (i,name,date, time, size)
+            msg3=mag
+            # --
+            app.send_message(chat_dest, msg2)
+            app.send_message(chat_dest, msg3)
+    except:
+        app.send_message(chat_dest, "搜索失败")
 
 
 @app.route('(?!/).+')
