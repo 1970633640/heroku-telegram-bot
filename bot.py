@@ -45,11 +45,11 @@ def parrot(message):
     first = r.text.split("<ul class=\"link-list\">")[1]
     # print(first)
     mag = mid(first, 'data-magnet="', '"')
-    name = mid(first, '<span class="name">', '</span>')
+    name = mid(first, '<span class="name">', '</span>').replace('[CiLi001.com]','')
     size = mid(first, '<span class="size">', '</span>')
     time = mid(first, '<span class="time">', '</span>')
     date = mid(first, '<p class="link-list-title">', '</p>').strip()
-    msg2 = "%s\n%s %s\n大小: %s\n[磁力链接](%s)" % (name,date, time, size, mag)
+    msg2 = "%s\n%s %s\n大小: %s\n<a href=\"%s\">磁力链接</a>" % (name,date, time, size, mag)
     # --
     app.send_message(chat_dest, msg2)
 
