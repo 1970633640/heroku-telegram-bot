@@ -1,20 +1,41 @@
 # -*- coding: utf-8 -*-
-import redis
+from telebot import TeleBot
+import requests
 import os
-import telebot
 # import some_api_lib
 # import ...
 
 # Example of your code beginning
 #           Config vars
 token = os.environ['TELEGRAM_TOKEN']
-some_api_token = os.environ['SOME_API_TOKEN']
+# some_api_token = os.environ['SOME_API_TOKEN']
 #             ...
 
 # If you use redis, install this add-on https://elements.heroku.com/addons/heroku-redis
-r = redis.from_url(os.environ.get("REDIS_URL"))
+
 
 #       Your bot code below
 # bot = telebot.TeleBot(token)
 # some_api = some_api_lib.connect(some_api_token)
 #              ...
+app = TeleBot(__name__)
+
+
+@app.route('/command ?(.*)')
+def example_command(message, cmd):
+    chat_dest = message['chat']['id']
+    msg = "Command Recieved: {}".format(cmd)
+    app.send_message(chat_dest, msg)
+
+
+@app.route('(?!/).+')
+def parrot(message):
+    chat_dest = message['chat']['id']
+    user_msg = message['text']
+    msg = "Parrot Says: {}".format(user_msg)
+    app.send_message(chat_dest, msg)
+
+
+if __name__ == '__main__':
+    app.config['api_key'] = token
+    app.poll(debug=False)
