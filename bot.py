@@ -24,7 +24,7 @@ app = TeleBot(__name__)
 @app.route('/command ?(.*)')
 def example_command(message, cmd):
     chat_dest = message['chat']['id']
-    msg = "Command Recieved: {}".format(cmd)
+    msg = "命令1: {}".format(cmd)
     app.send_message(chat_dest, msg)
 
 
@@ -33,7 +33,7 @@ def example_command(message, cmd):
 def parrot(message):
     chat_dest = message['chat']['id']
     user_msg = message['text']
-    msg = "Parrot Says: {}".format(user_msg)
+    msg = user_msg
     app.send_message(chat_dest, msg)
 
 
