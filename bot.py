@@ -49,9 +49,11 @@ def parrot(message):
     size = mid(first, '<span class="size">', '</span>')
     time = mid(first, '<span class="time">', '</span>')
     date = mid(first, '<p class="link-list-title">', '</p>').strip()
-    msg2 = "%s\n%s %s\n大小: %s\n<a href=\"%s\">磁力链接</a>" % (name,date, time, size, mag)
+    msg2 = "%s\n%s %s\n大小: %s\n磁力链接:" % (name,date, time, size)
+    msg3=mag
     # --
     app.send_message(chat_dest, msg2)
+    app.send_message(chat_dest,msg3)
 
 
 if __name__ == '__main__':
