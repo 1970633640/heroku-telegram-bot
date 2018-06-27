@@ -84,4 +84,4 @@ def parrot(message):
 
 if __name__ == '__main__':
     app.config['api_key'] = token
-    app.poll(debug=False)
+    app.poll(debug=True)

@@ -7,8 +7,8 @@ def mid(s, l, r):
     return s[l1:r1]
 
 
-r=requests.get("http://f.cili001.com/index/index?c=&k="+"西部世界")
-for i in range(1,10):
+r=requests.get("http://f.cili001.com/index/index?c=&k="+"复仇")
+for i in range(1,5):
     first=r.text.split("<ul class=\"link-list\">")[i]
     # print(first)
     mag=mid(first,'data-magnet="','"')
