@@ -41,21 +41,26 @@ def parrot(message):
     user_msg = message['text']
     msg = user_msg
     # --
-    r = requests.get("http://f.cili001.com/index/index?c=&k=" + msg)
-    first = r.text.split("<ul class=\"link-list\">")[1]
-    # print(first)
-    mag = mid(first, 'data-magnet="', '"')
-    name = mid(first, '<span class="name">', '</span>').replace('[CiLi001.com]','')
-    size = mid(first, '<span class="size">', '</span>')
-    time = mid(first, '<span class="time">', '</span>')
-    date = mid(first, '<p class="link-list-title">', '</p>').strip()
-    msg2 = "%s\n%s %s\n大小: %s\n磁力链接:" % (name,date, time, size)
-    msg3=mag
-    # --
-    app.send_message(chat_dest, msg2)
-    app.send_message(chat_dest,msg3)
+    try:
+        r = requests.get("http://f.cili001.com/index/index?c=&k=" + msg)
+        first = r.text.split("<ul class=\"link-list\">")[1]
+        # print(first)
+        mag = mid(first, 'data-magnet="', '"')
+        name = mid(first, '<span class="name">', '</span>').replace('[CiLi001.com]','')
+        size = mid(first, '<span class="size">', '</span>')
+        time = mid(first, '<span class="time">', '</span>')
+        date = mid(first, '<p class="link-list-title">', '</p>').strip()
+        msg2 = "%s\n%s %s\n大小: %s\n磁力链接:" % (name,date, time, size)
+        msg3=mag
+        # --
+        app.send_message(chat_dest, msg2)
+        app.send_message(chat_dest, msg3)
+    except:
+        app.send_message(chat_dest, "搜索失败")
+
+
 
 
 if __name__ == '__main__':
     app.config['api_key'] = token
-    app.poll(debug=True)
+    app.poll(debug=False)
